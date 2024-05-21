@@ -7,10 +7,28 @@ public class Rectangle {
   private int height;
 
   // COSTRUTTORI
-  public Rectangle(int height, int base) {
-    // controllo che base e height siano > 0 altrimenti gli do default 1
+  public Rectangle(int height, int base) throws IllegalArgumentException {
+    // controllo che base e height siano > 0 altrimenti sollevo un'eccezione
+    checkValue(base, "base");
+    checkValue(height, "height");
     this.height = valueOrDefault(height);
     this.base = valueOrDefault(base);
+  }
+
+  public Rectangle(String heightString, String baseString) throws IllegalArgumentException {
+    int baseValue = 0;
+    int heightValue = 0;
+
+    try {
+      baseValue = Integer.parseInt(baseString);
+      heightValue = Integer.parseInt(heightString);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("base and height mmust be > 0");
+    }
+    checkValue(baseValue, "base");
+    checkValue(heightValue, "height");
+    this.base = baseValue;
+    this.height = heightValue;
   }
 
   // METODI
@@ -48,11 +66,33 @@ public class Rectangle {
 
   // nei setter faccio gli stessi controlli che nel costruttore o in altri metodi dove do valore
   // agli attributi private
-  public void setBase(int base) {
-    this.base = valueOrDefault(base);
+  public void setBase(int base) throws IllegalArgumentException {
+    checkValue(base, "base");
+    this.base = base;
   }
 
-  public void setHeight(int height) {
-    this.height = valueOrDefault(height);
+  public void setHeight(int height) throws IllegalArgumentException {
+    checkValue(height, "height");
+    this.height = height;
   }
+
+  private void checkValue(int value, String type) throws IllegalArgumentException {
+    if (value <= 0) {
+      throw new IllegalArgumentException("Invalid " + type);
+    }
+  }
+
+  public int fake() {
+    try {
+      if (base > height) {
+        return base + height;
+      }
+      throw new IllegalArgumentException("FAKE EXCEPTION");
+    } catch (IllegalArgumentException e) {
+      throw e;
+    } finally {
+      System.out.println("FINALLY");
+    }
+  }
+
 }

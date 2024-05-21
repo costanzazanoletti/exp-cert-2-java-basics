@@ -10,7 +10,7 @@ public class Series extends Content {
   }
 
   @Override
-  public void play() {
+  public final void play() {
     super.play();
     for (int i = 1; i <= numberOfEpisodes; i++) {
       System.out.print(" episode " + i);
