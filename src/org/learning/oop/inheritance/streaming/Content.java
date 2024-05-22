@@ -1,6 +1,6 @@
 package org.learning.oop.inheritance.streaming;
 
-public class Content {
+public abstract class Content {
 
   protected String title;
 
