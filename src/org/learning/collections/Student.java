@@ -2,7 +2,7 @@ package org.learning.collections;
 
 import java.util.Objects;
 
-public class Student {
+public class Student implements Comparable<Student> {
 
   private int id;
   private String name;
@@ -71,5 +71,17 @@ public class Student {
     int result = getId();
     result = 31 * result + Objects.hashCode(getName());
     return result;
+  }
+
+  @Override
+  public int compareTo(Student o) {
+    if (o == null) {
+      return 1;
+    }
+    if (getId() == o.getId()) {
+      return getName().compareTo(o.getName());
+    } else {
+      return getId() - o.getId();
+    }
   }
 }
